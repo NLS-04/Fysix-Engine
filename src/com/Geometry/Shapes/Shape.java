@@ -1,19 +1,16 @@
-package Engine.Geometry.Shapes;
+package com.Geometry.Shapes;
 
-import Engine.Geometry.Geometry;
 import Math.Vector2;
-import Math.ExtendedAlgorithms;
 
 import java.util.Arrays;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.sin;
 
 public abstract class Shape implements Geometry {
 
     protected final Vector2[] vertices;
 
-    /** World position of geometry's Center */
-    protected Vector2 position;
 
     /** smallest Bounding box of shape with current rotation */
     protected Rectangle boundingBox;
@@ -23,7 +20,6 @@ public abstract class Shape implements Geometry {
 
     protected Shape( Vector2[] _vertices ) {
         vertices = Arrays.copyOf( _vertices, _vertices.length );
-        position = Vector2.ZERO();
         rotation = 0.0;
 
         recalculateVertices();
@@ -37,25 +33,6 @@ public abstract class Shape implements Geometry {
         return boundingBox;
     }
 
-
-    /** this should only be used to directly manipulate the position.
-     * The purpose of this direct-access lies in fact to avoid intermediate Vector objects, since these require heap allocation and creation,
-     * which is too expensive and unnecessary in this case.
-     * @return mutable vector of position */
-    public Vector2 getViewOn_position() {
-        return position;
-    }
-
-    /** @return copy of position */
-    @Override
-    public Vector2 getPosition() {
-        return position.clone();
-    }
-
-    @Override
-    public void setPosition( Vector2 newPos ) {
-        position = newPos;
-    }
 
     @Override
     public double getRotation() {
@@ -128,6 +105,19 @@ public abstract class Shape implements Geometry {
             min_y = Double.min( min_y, y );
         }
 
-        boundingBox = new Rectangle( Vector2.ZERO(), 0, max_x-min_x, max_y-min_y );
+        boundingBox = new Rectangle( max_x-min_x, max_y-min_y );
+    }
+
+    @Override
+    public double getGeometryArea() {
+        double area = 0.0;
+
+        for ( int i = 0; i < vertices.length - 1; i++ )
+            area += vertices[i].x * vertices[i+1].y - vertices[i+1].x * vertices[i].y;
+
+        // closing the polygon to get the actual area
+        area += vertices[0].x * vertices[1].y - vertices[1].x * vertices[0].y;
+
+        return 0.5 * abs( area );
     }
 }

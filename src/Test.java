@@ -1,6 +1,6 @@
 //import GUI.*;
-import Engine.Geometry.Shapes.*;
 import Math.*;
+import com.Geometry.Shapes.Rectangle;
 
 import java.util.Locale;
 import java.util.Arrays;

@@ -1,14 +1,15 @@
-package Engine.Geometry.Shapes;
+package com.Geometry.Shapes;
 
 import Math.Vector2;
+
+import static java.lang.Math.PI;
+
 
 public class Circle extends Shape {
     protected double radius;
 
-    public Circle( Vector2 position, double rotation, double radius ) {
+    public Circle( double radius ) {
         super( new Vector2[] { Vector2.ZERO() } );
-        setPosition( position );
-        setRotation( rotation );
 
         this.radius = radius;
     }
@@ -25,5 +26,10 @@ public class Circle extends Shape {
     @Override
     public Vector2 maxVertexIn(Vector2 direction) {
         return direction.clone().normalize().multi( radius );
+    }
+
+    @Override
+    public double getGeometryArea() {
+        return PI * radius*radius;
     }
 }
