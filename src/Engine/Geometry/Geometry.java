@@ -1,20 +1,20 @@
 package Engine.Geometry;
 
-import Math.Vector;
+import Math.Vector2;
 
 public interface Geometry {
 //    boolean intersecting( Geometry g1, Geometry g2 );
-    Vector maxVertexIn( Vector direction );
+    Vector2 maxVertexIn( final Vector2 direction );
 
-    /** the origin of a Geometry is the reference to all its Vertices are defined
-     * @return positions of this geometry's origin */
-    Vector getPosition();
-    /** the Center of gravity of a Geometry can be offset to its origin
-     * @return position of this geometry's Center of Gravity */
-    Vector getPosition_CoG();
+    /** the postion of this geometry's center in world coordinates
+     * @return positions of this geometry's center */
+    Vector2 getPosition();
+    /** set the postion of this geometry's center in world coordinates,
+     * if possible and implemented use direct access to the position to update or set a new position (to avoid intermediate object creations) */
+    void setPosition( Vector2 newPos );
 
-    /** @return the rotation in radians of a Geometry about its origin */
+    /** @return the rotation in radians of a Geometry about its center */
     double getRotation();
-    /** @return the rotation in radians of a Geometry about its Center of Gravity */
-    double getRotation_CoG();
+    /** set the rotation in radians of a Geometry about its center */
+    void setRotation( final double angle );
 }

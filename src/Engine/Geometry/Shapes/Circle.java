@@ -1,16 +1,15 @@
 package Engine.Geometry.Shapes;
 
-import Math.Vector;
+import Math.Vector2;
 
 public class Circle extends Shape {
     protected double radius;
 
-    public Circle( Vector position, double rotation, double radius ) {
-        this.position = position;
-        this.rotation = rotation;
-        vertices = new Vector[] { Vector.ZERO };
+    public Circle( Vector2 position, double rotation, double radius ) {
+        super( new Vector2[] { Vector2.ZERO() } );
+        setPosition( position );
+        setRotation( rotation );
 
-        offset_CoG = Vector.ZERO;
         this.radius = radius;
     }
 
@@ -22,13 +21,9 @@ public class Circle extends Shape {
     public double getRotation() {
         return 0.0;
     }
-    @Override
-    public double getRotation_CoG() {
-        return 0.0;
-    }
 
     @Override
-    public Vector maxVertexIn(Vector direction) {
-        return direction.normalized().multi( radius );
+    public Vector2 maxVertexIn(Vector2 direction) {
+        return direction.clone().normalize().multi( radius );
     }
 }
